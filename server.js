@@ -1,7 +1,7 @@
 'use strict';
 
 const express     = require('express');
-// const bodyParser  = require('body-parser');
+// const bodyParser  = require('body-parser'); // deprecated; uncomment only if required by FCC tests
 const expect      = require('chai').expect;
 const cors        = require('cors');
 require('dotenv').config();
@@ -10,14 +10,14 @@ const apiRoutes         = require('./routes/api.js');
 const fccTestingRoutes  = require('./routes/fcctesting.js');
 const runner            = require('./test-runner');
 
-let app = express();
+const app = express();
 
 app.use('/public', express.static(process.cwd() + '/public'));
 
 app.use(cors({origin: '*'})); //For FCC testing purposes only
 
-// app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json()); // deprecated; uncomment only if required by FCC tests
+// app.use(bodyParser.urlencoded({ extended: true })); // deprecated; uncomment only if required by FCC tests
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true}))
