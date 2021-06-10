@@ -107,7 +107,7 @@ function ConvertHandler() {
         result = 'miles'
         break;
       case 'km':
-        result = 'kilograms'
+        result = 'kilometers'
         break;
       case 'gal':
         result = 'gallons'
@@ -163,8 +163,11 @@ function ConvertHandler() {
   };
 
   // input: 89/2lbs => output: 44.5 pounds converts to 20.18484 kilograms
+  // '{initNum} {initUnitString} converts to {returnNum} {returnUnitString}'
   this.getString = function (initNum, initUnit, returnNum, returnUnit) {
-    return `${initNum} ${this.spellOutUnit(initUnit)} converts to ${returnNum} ${this.spellOutUnit(returnUnit)}`
+    const initUnitString = this.spellOutUnit(initUnit);
+    const returnUnitString = this.spellOutUnit(returnUnit);
+    return `${initNum} ${initUnitString} converts to ${returnNum} ${returnUnitString}`
   };
 
 }
