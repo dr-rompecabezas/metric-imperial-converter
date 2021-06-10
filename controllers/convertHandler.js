@@ -1,16 +1,31 @@
 function ConvertHandler() {
 
   this.getNum = function (input) {
-    const regEx = /^[^\.\/]\d?(\.|\/|\.\d+\/)?\d?/
     let result;
-    input = input.match(regEx)
-    if (!input) return result
 
-    result = parseFloat(input[0])
-    result = result.toFixed(5)
-    result = parseFloat(result)
+    let regExp1 = /^(gal|l|mi|km|lbs|kg)$/i;
+    let regExp2 = /^(?:(?:(?:\d+\.)?\d+)(?:\/)?)+(?=[a-z])/i;
 
-    return result;
+    if (regExp1.test(input)) {
+      result = 1;
+    } else if (regExp2.test(input)) {
+      let match = input.match(regExp2);
+      if (match[0].includes("/")) {
+        let split = match[0].split("/");
+        if (split.length > 2) {
+          result = null;
+        } else {
+          result = parseFloat(split[0], 10) / parseFloat(split[1], 10);
+          result = result.toFixed(5);
+          result = parseFloat(result);
+        }
+      } else if (!match[0].includes("/")) {
+        result = parseFloat(match[0])
+        result = result.toFixed(5);
+        result = parseFloat(result);
+      }
+    }
+    return result
   };
 
   this.getUnit = function (input) {
@@ -113,6 +128,11 @@ function ConvertHandler() {
     const lbsToKg = 0.453592;
     const miToKm = 1.60934;
     let result;
+
+    if (!initNum || !initUnit) {
+      return result
+    }
+
     switch (initUnit) {
       case 'lbs':
         result = initNum * lbsToKg
@@ -136,7 +156,7 @@ function ConvertHandler() {
       default:
         break;
     }
-    
+
     result = result.toFixed(5)
     result = parseFloat(result)
     return result;
